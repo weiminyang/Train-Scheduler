@@ -53,7 +53,7 @@
     var now = moment().format("HH:mm");
     var a = now.split(':');
     var b = firstTrainTime.split(':');
-  var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 + (+b[1]);
+    var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]);
     if(diff<0){
     diff=diff+24*60;}
     if(diff<0){
@@ -61,7 +61,11 @@
     if(diff<0){
       diff=diff+24*60;}
   var minutesAway = frequency - diff%frequency;
-  var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
+  var minute = ((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
+  if(minute<=0){
+    minute='0'+minute;
+  }
+  var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+minute;
    
   
  
@@ -88,7 +92,7 @@
       var now = moment().format("HH:mm");
       var a = now.split(':');
       var b = firstTrainTime.split(':');
-    var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 + (+b[1]);
+    var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]);
       if(diff<0){
       diff=diff+24*60;}
       if(diff<0){
@@ -96,7 +100,11 @@
       if(diff<0){
         diff=diff+24*60;}
     var minutesAway = frequency - diff%frequency;
-    var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
+    var minute = ((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
+    if(minute<=0){
+      minute='0'+minute;
+    }
+    var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+minute;
      
     
    
@@ -106,3 +114,16 @@
     });
   }
   setInterval(run, 6000);
+
+// function deleteChild(){
+//   database.ref().on("child_remove", function(childSnapshot) {
+   
+//     snapshot.val()[0].removeValue();
+    
+//   });
+
+// }
+
+// $("<td>").on("click", function(event) {
+//   deleteChild();
+// });
