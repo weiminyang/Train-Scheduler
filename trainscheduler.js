@@ -51,22 +51,27 @@
     var frequency = childSnapshot.val().frequency;
   
     var now = moment().format("HH:mm");
-    var a = now.split(':');
-    var b = firstTrainTime.split(':');
-    var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]);
-    if(diff<0){
-    diff=diff+24*60;}
-    if(diff<0){
-      diff=diff+24*60;}
-    if(diff<0){
-      diff=diff+24*60;}
-  var minutesAway = frequency - diff%frequency;
-  var minute = ((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
-  if(minute<=0){
-    minute='0'+minute;
-  }
-  var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+minute;
-   
+      var a = now.split(':');
+      var b = firstTrainTime.split(':');
+    var diff = Math.abs((+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]));
+      
+    var minutesAway = frequency - diff%frequency;
+    var minute = ((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
+    
+    var day=parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/1440);
+    console.log(minute);
+    if(minute<10){
+      minute="0"+minute;
+    }
+    console.log(minute);
+    var nextArrival;
+    if(day>0){
+    nextArrival = "+"+day +" "+parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway-day*1440)/60)+':'+minute;
+    }
+    else
+    {
+      nextArrival =parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway-day*1440)/60)+':'+minute;  
+    }
   
  
     var newRow = $("<tr>").append(
@@ -92,24 +97,14 @@
       var now = moment().format("HH:mm");
       var a = now.split(':');
       var b = firstTrainTime.split(':');
-    var diff = (+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]);
-      if(diff<0){
-      diff=diff+24*60;}
-      if(diff<0){
-        diff=diff+24*60;}
-      if(diff<0){
-        diff=diff+24*60;}
+    var diff = Math.abs((+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]));
+      
     var minutesAway = frequency - diff%frequency;
-    var minute = ((+a[0]) * 60 + (+a[1]) + minutesAway)%60;
-    if(minute<=0){
-      minute='0'+minute;
-    }
-    var nextArrival = parseInt(((+a[0]) * 60 + (+a[1]) + minutesAway)/60)+':'+minute;
-     
     
+  
    
         
-        $("#minutes-away").text(minutesAway);
+        $("#minutes-away").text((this).minutesAway);
       
     });
   }
