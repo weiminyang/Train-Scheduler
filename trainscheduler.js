@@ -86,29 +86,8 @@
     $("#train-schedule > tbody").append(newRow);
   });
 
-  function run(){
-    database.ref().on("child_added", function(childSnapshot) {
-      // Store everything into a variable.
-      var name = childSnapshot.val().name;
-      var destination = childSnapshot.val().destination;
-      var firstTrainTime = childSnapshot.val().firstTrainTime;
-      var frequency = childSnapshot.val().frequency;
-    
-      var now = moment().format("HH:mm");
-      var a = now.split(':');
-      var b = firstTrainTime.split(':');
-    var diff = Math.abs((+a[0]) * 60 + (+a[1])-(+b[0]) * 60 - (+b[1]));
-      
-    var minutesAway = frequency - diff%frequency;
-    
   
-   
-        
-        $("#minutes-away").text((this).minutesAway);
-      
-    });
-  }
-  setInterval(run, 6000);
+  // setInterval(run, 6000);
 
 // function deleteChild(){
 //   database.ref().on("child_remove", function(childSnapshot) {
